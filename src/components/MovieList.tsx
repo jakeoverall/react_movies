@@ -8,8 +8,8 @@ type MovieListProps = {
 function MovieList({ movies }: MovieListProps) {
 
   return movies.map(m =>
-    <div className='col-md-3 mb-4'>
-      <MovieCard key={m.id} movie={m} />
+    <div className='col-md-3 mb-4' key={m.id}>
+      <MovieCard movie={m} />
     </div>
   )
 

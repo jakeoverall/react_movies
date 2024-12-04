@@ -12,6 +12,8 @@ class ObservableAppState {
 
   movies: Movie[] = []
   activeMovie: Movie | null = null
+  currentPage: number = 0
+  totalPages: number = 0
 
   constructor() {
     makeAutoObservable(this)

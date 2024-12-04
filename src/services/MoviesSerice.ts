@@ -38,8 +38,8 @@ class MoviesService {
     const movies = responseData.results.map((movieData: MovieData) => new Movie(movieData))
     console.log(movies)
     AppState.movies = movies
-    // AppState.currentPage = responseData.page
-    // AppState.totalPages = responseData.total_pages
+    AppState.currentPage = responseData.page
+    AppState.totalPages = responseData.total_pages
   }
 
   clearMovies() {
