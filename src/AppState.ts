@@ -11,6 +11,7 @@ class ObservableAppState {
   account: Account | null = null
 
   movies: Movie[] = []
+  activeMovie: Movie | null = null
 
   constructor() {
     makeAutoObservable(this)

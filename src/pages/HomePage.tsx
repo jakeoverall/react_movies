@@ -4,6 +4,9 @@ import Pop from '../utils/Pop';
 import { moviesService } from '../services/MoviesSerice';
 import { AppState } from '../AppState';
 import { observer } from 'mobx-react';
+import MovieList from '../components/MovieList';
+import Modal from '../components/Modal';
+import MovieDetails from '../components/MovieDetails';
 
 
 
@@ -19,19 +22,36 @@ function HomePage() {
     }
   }
 
-
   // NOTE pretty much a onMounted
   useEffect(() => {
-    setTimeout(() => {
-      getMovies()
-    }, 1500)
+    // setTimeout(() => {
+    getMovies()
+    // }, 1500)
   }, [])
+
+  const MovieModalContent = () => (
+    // NOTE this is a tiny component that prevents needing to use .? everywhere in the details
+    AppState.activeMovie ?
+      <MovieDetails movie={AppState.activeMovie} />
+      :
+      <></>
+  )
+
 
 
   return (
     <div className="home-page">
 
-      {/* <pre><code>{JSON.stringify(AppState.movies, null, 2)}</code></pre> */}
+      <div className="container">
+        <div className="row">
+          <MovieList movies={AppState.movies} />
+        </div>
+      </div>
+
+      <Modal id='movieModal' title={AppState.activeMovie?.title || ''}>
+        <MovieModalContent />
+      </Modal>
+
 
     </div>
   )
