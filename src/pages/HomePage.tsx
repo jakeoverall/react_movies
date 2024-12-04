@@ -1,23 +1,40 @@
 import { useEffect, useState } from "react";
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+import { moviesService } from '../services/MoviesSerice';
+import { AppState } from '../AppState';
+import { observer } from 'mobx-react';
 
-export default function HomePage() {
 
-  const [x, setX] = useState(7)
+
+function HomePage() {
+
+
+  async function getMovies() {
+    try {
+      await moviesService.discoverMovies()
+    } catch (e) {
+      logger.error(e)
+      Pop.error(e as Error, 'Get Movies')
+    }
+  }
+
+
   // NOTE pretty much a onMounted
   useEffect(() => {
-    console.log('did it mount?')
+    setTimeout(() => {
+      getMovies()
+    }, 1500)
   }, [])
-
-  function changeX(){
-    // x += 1 ⛔ NOOOO That is a mutation. Its not allowed
-    let y = x + 1
-    setX(x + 1000)
-  }
 
 
   return (
     <div className="home-page">
-      <button onClick={changeX}>{x}</button>
+
+      {/* <pre><code>{JSON.stringify(AppState.movies, null, 2)}</code></pre> */}
+
     </div>
   )
 }
+
+export default observer(HomePage)

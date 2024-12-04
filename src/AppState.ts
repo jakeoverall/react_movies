@@ -2,12 +2,15 @@ import { action, makeAutoObservable } from "mobx"
 import { isValidProp } from "./utils/isValidProp.ts"
 import { Account } from './models/Account.js'
 import { Identity } from '@bcwdev/auth0provider-client'
+import { Movie } from './models/Movie.ts'
 
 
 class ObservableAppState {
 
   identity: Identity | null = null
   account: Account | null = null
+
+  movies: Movie[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -24,6 +27,7 @@ export const AppState = new Proxy(new ObservableAppState(), {
   set(target, prop: string, value) {
     isValidProp(target, prop)
     action(() => {
+      // REVIEW auto emits on change
       // @ts-ignore
       target[prop] = value
     })()
