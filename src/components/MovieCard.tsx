@@ -12,8 +12,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
   }
 
   return (
-    <div className="MovieCard card">
-      <div className="card-img-top" data-bs-toggle="modal" data-bs-target="#movieModal" onClick={setActive}>
+    <div className="MovieCard">
+      <div data-bs-toggle="modal" data-bs-target="#movieModal" onClick={setActive}>
         <img className='img-fluid rounded shadow' src={movie.posterImgUrl} alt={movie.title} title={movie.title} />
       </div>
     </div>

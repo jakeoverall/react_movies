@@ -7,11 +7,11 @@ import { observer } from 'mobx-react';
 import MovieList from '../components/MovieList';
 import Modal from '../components/Modal';
 import MovieDetails from '../components/MovieDetails';
+import SearchBar from '../components/SearchBar';
 
 
 
 function HomePage() {
-
 
   async function getMovies() {
     try {
@@ -43,6 +43,9 @@ function HomePage() {
     <div className="home-page">
 
       <div className="container">
+        <div className="row my-4">
+          <SearchBar />
+        </div>
         <div className="row">
           <MovieList movies={AppState.movies} />
         </div>
