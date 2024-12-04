@@ -14,6 +14,8 @@ class ObservableAppState {
   activeMovie: Movie | null = null
   currentPage: number = 0
   totalPages: number = 0
+  totalResults: number = 0
+  query: string = ''
 
   constructor() {
     makeAutoObservable(this)

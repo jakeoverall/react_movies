@@ -7,6 +7,7 @@ type MoviesResponse = {
   page: number
   results: MovieData[]
   total_pages: number
+  total_results: number
 }
 
 class MoviesService {
@@ -40,6 +41,7 @@ class MoviesService {
     AppState.movies = movies
     AppState.currentPage = responseData.page
     AppState.totalPages = responseData.total_pages
+    AppState.totalResults = responseData.total_results
   }
 
   clearMovies() {

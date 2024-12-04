@@ -6,7 +6,6 @@ import { AppState } from '../AppState';
 export default function SearchBar() {
 
   const [searching, setSearching] = useState('')
-  const [query, setQuery] = useState('')
 
   function delayedSearch(form: HTMLFormElement) {
     setSearching('searching')
@@ -16,13 +15,21 @@ export default function SearchBar() {
       setSearching('done')
     }, 2500)
   }
+  async function fastSearch(form: HTMLFormElement) {
+    setSearching('searching')
+    await moviesService.searchMovies(form.query.value)
+    setSearching('done')
+    form.reset()
+  }
 
   async function findMovies() {
     try {
       event?.preventDefault()
       const form = event?.target as HTMLFormElement
-      setQuery(form.query.value)
-      delayedSearch(form)
+      AppState.query = form.query.value
+      // delayedSearch(form)
+      fastSearch(form)
+
     }
     catch (error) {
       Pop.error(error as Error);
@@ -36,11 +43,11 @@ export default function SearchBar() {
       case '':
         return <></>
       case 'searching':
-        return <p>finding movies with title {query}</p>
+        return <p>finding movies with title {AppState.query}</p>
       case 'done':
         return AppState.movies.length
-          ? <p>Found {AppState.movies.length} movies for <kbd className='badge bg-black'>"{query}"</kbd></p>
-          : <p className='alert alert-danger p-0' >No results found for <kbd className='badge bg-dark'>"{query}"</kbd></p>
+          ? <p>Found {AppState.totalResults} movies for <kbd className='badge bg-black'>"{AppState.query}"</kbd></p>
+          : <p className='alert alert-danger p-0' >No results found for <kbd className='badge bg-dark'>"{AppState.query}"</kbd></p>
     }
   }
 
@@ -50,7 +57,7 @@ export default function SearchBar() {
       <div className="input-group mb-2">
         <input className='form-control' type="text" required placeholder='Find a movie' name="query" />
         <button className='btn' type='submit' disabled={searching == 'searching'}>
-          <i className={`mdi ${searching ? 'mdi-loading mdi-spin' : 'mdi-magnify'} `}></i>
+          <i className={`mdi ${searching == 'searching' ? 'mdi-loading mdi-spin' : 'mdi-magnify'} `}></i>
         </button>
       </div>
 

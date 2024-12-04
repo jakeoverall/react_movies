@@ -38,6 +38,28 @@ function HomePage() {
   )
 
 
+  async function go(n: number) {
+    try {
+      AppState.query
+        ? await moviesService.changeSearchPage(AppState.currentPage + n, AppState.query)
+        : await moviesService.changeDiscoverPage(AppState.currentPage + n)
+    }
+    catch (error) {
+      Pop.error(error as Error);
+    }
+  }
+
+
+  function Pagination() {
+    return (
+      <div className='d-flex align-items-center justify-content-between'>
+        <button className='btn' disabled={AppState.currentPage == 1} onClick={() => go(-1)}>Previous</button>
+        <span>page {AppState.currentPage} of {AppState.totalPages}</span>
+        <button className='btn' disabled={AppState.currentPage == AppState.totalPages} onClick={() => go(1)}>Next</button>
+      </div>
+    )
+  }
+
 
   return (
     <div className="home-page">
@@ -45,6 +67,7 @@ function HomePage() {
       <div className="container">
         <div className="row my-4">
           <SearchBar />
+          <Pagination />
         </div>
         <div className="row">
           <MovieList movies={AppState.movies} />
