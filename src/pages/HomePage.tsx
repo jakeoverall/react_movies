@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { moviesService } from '../services/MoviesSerice';
@@ -8,7 +8,7 @@ import MovieList from '../components/MovieList';
 import Modal from '../components/Modal';
 import MovieDetails from '../components/MovieDetails';
 import SearchBar from '../components/SearchBar';
-
+import Pagination from '../components/Pagination';
 
 function HomePage() {
 
@@ -23,39 +23,16 @@ function HomePage() {
 
   // NOTE pretty much a onMounted
   useEffect(() => {
-    // setTimeout(() => {
     getMovies()
-    // }, 1500)
   }, [])
 
   const MovieModalContent = () => (
-    // NOTE this is a tiny component that prevents needing to use .? everywhere in the details
+    // NOTE this is a tiny local component that prevents needing to use .? everywhere in the details
     AppState.activeMovie ?
       <MovieDetails movie={AppState.activeMovie} />
       :
       <></>
   )
-
-  async function go(n: number) {
-    try {
-      AppState.query
-        ? await moviesService.changeSearchPage(AppState.currentPage + n, AppState.query)
-        : await moviesService.changeDiscoverPage(AppState.currentPage + n)
-    }
-    catch (error) {
-      Pop.error(error as Error);
-    }
-  }
-
-  function Pagination() {
-    return (
-      <div className='d-flex align-items-center justify-content-between'>
-        <button className='btn' disabled={AppState.currentPage == 1} onClick={() => go(-1)}>Previous</button>
-        <span>page {AppState.currentPage} of {AppState.totalPages}</span>
-        <button className='btn' disabled={AppState.currentPage == AppState.totalPages} onClick={() => go(1)}>Next</button>
-      </div>
-    )
-  }
 
   return (
     <div className="home-page">
