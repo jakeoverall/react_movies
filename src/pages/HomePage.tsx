@@ -10,7 +10,6 @@ import MovieDetails from '../components/MovieDetails';
 import SearchBar from '../components/SearchBar';
 
 
-
 function HomePage() {
 
   async function getMovies() {
@@ -37,7 +36,6 @@ function HomePage() {
       <></>
   )
 
-
   async function go(n: number) {
     try {
       AppState.query
@@ -49,7 +47,6 @@ function HomePage() {
     }
   }
 
-
   function Pagination() {
     return (
       <div className='d-flex align-items-center justify-content-between'>
@@ -60,10 +57,8 @@ function HomePage() {
     )
   }
 
-
   return (
     <div className="home-page">
-
       <div className="container">
         <div className="row my-4">
           <SearchBar />
@@ -77,7 +72,6 @@ function HomePage() {
       <Modal id='movieModal' title={AppState.activeMovie?.title || ''}>
         <MovieModalContent />
       </Modal>
-
 
     </div>
   )
