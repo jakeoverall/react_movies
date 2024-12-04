@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
-  const [count, setCount] = useState(0)
+
+  const [x, setX] = useState(7)
+  // NOTE pretty much a onMounted
+  useEffect(() => {
+    console.log('did it mount?')
+  }, [])
+
+  function changeX(){
+    // x += 1 ⛔ NOOOO That is a mutation. Its not allowed
+    let y = x + 1
+    setX(x + 1000)
+  }
+
 
   return (
     <div className="home-page">
-      <div className="container my-3">
-        <div className="row">
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <button className="btn btn-success my-1" onClick={() => setCount((count) => count + 1)}>
-                  count is {count}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button onClick={changeX}>{x}</button>
     </div>
   )
 }
